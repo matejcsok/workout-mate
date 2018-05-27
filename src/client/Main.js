@@ -4,6 +4,8 @@ import {Switch, Route} from 'react-router-dom';
 //import Home from './components/Home';
 //import Singup from './Singup';
 import Login from './components/Login';
+import Home from './components/Home';
+import Profile from './components/Profile';
 
 
 // The Main component renders one of the three provided
@@ -15,8 +17,8 @@ const Main = () => (
     <main>
         <Switch>
             <Route exact path='/' component={Login}/>
-            {/*<Route path='/singup' component={Singup}/>*/}
-            {/*<Route path='/login' component={Login}/>*/}
+            <Route path='/home' component={Home}/>
+            <Route path='/profile' component={Profile}/>
         </Switch>
     </main>
 );
