@@ -1,33 +1,78 @@
-import React, { Component } from 'react'
-import { Input, Menu } from 'semantic-ui-react'
+import React, {Component} from 'react'
+import {Link} from 'react-router-dom'
+import {Menu} from 'semantic-ui-react'
 
-class Header extends Component {
+export default class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            activeItem: 'home'
-        };
+            activeItem: 'logIn'
+        }
     }
 
-    handleItemClick (e, { name }) { this.setState({ activeItem: name });}
+
+    handleItemClick(e, {name}) {
+        this.setState({activeItem: name})
+    }
 
     render() {
-        const { activeItem } = this.state;
+
+        const Logout = () => {
+            return (
+                <div>
+                    <Menu.Item
+                        name='logOut'
+                        onClick={this.handleItemClick.bind(this)}
+                    >
+                        LogOut
+                    </Menu.Item>
+                </div>
+            )
+        };
+
+        const Login = () => {
+            return (
+                <div>
+                        <Menu.Item
+                            as={Link} to='/'
+                            name='logIn'
+                            active={activeItem === 'logIn'}
+                            onClick={this.handleItemClick.bind(this)}
+                        >
+                            Login
+                        </Menu.Item>
+                </div>
+            )
+        };
+
+        const {activeItem} = this.state;
 
         return (
-            <Menu secondary>
-                <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick.bind(this)} />
-                <Menu.Item name='messages' active={activeItem === 'messages'} onClick={this.handleItemClick.bind(this)} />
-                <Menu.Item name='friends' active={activeItem === 'friends'} onClick={this.handleItemClick.bind(this)} />
-                <Menu.Menu position='right'>
-                    <Menu.Item>
-                        <Input icon='search' placeholder='Search...' />
+            <Menu>
+                    <Menu.Item
+                        as={Link} to='/home'
+                        name='home'
+                        active={activeItem === 'home'}
+                        onClick={this.handleItemClick.bind(this)}
+                    >
+                        Home
                     </Menu.Item>
-                    <Menu.Item name='logout' active={activeItem === 'logout'} onClick={this.handleItemClick.bind(this)} />
+
+                    <Menu.Item
+                        as={Link} to='/profile'
+                        name='profile'
+                        active={activeItem === 'profile'}
+                        onClick={this.handleItemClick.bind(this)}
+                    >
+                        Profile
+                    </Menu.Item>
+
+                <Menu.Menu position='right'>
+                    <Logout/>
+                    <Login/>
                 </Menu.Menu>
+
             </Menu>
         )
     }
 }
-
-export default Header;

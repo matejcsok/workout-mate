@@ -1,10 +1,21 @@
 const express = require('express');
-const os = require('os');
+const bodyParser = require('body-parser');
+
 
 const app = express();
 
 app.use(express.static('dist'));
-app.get('/api/getUsername', (req, res) => res.send({ username: os.userInfo().username }));
 
+//parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+//parse application/json
+app.use(bodyParser.json());
+
+app.post('/api/userLogin', (req, res) => {
+    let body = req.body;
+    console.log(body)
+    res.status(200).send()
+});
 
 app.listen(8080, () => console.log('Listening on port 8080!'));
