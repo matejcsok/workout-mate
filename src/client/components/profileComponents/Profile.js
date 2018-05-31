@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
+
 import UserCard from './UserCard'
+import SportsDropdown from './SportsDropdown'
 
 class Profile extends Component {
     constructor(props) {
@@ -35,7 +37,9 @@ class Profile extends Component {
                     <textarea style={{marginBottom: '15px'}} className="form-control" type="text" placeholder="Leírás"
                               onChange={event => this.setState({description: event.target.value})}/>
 
-                    <button style={{float: 'right'}} className="btn btn-primary">Mentés</button>
+                    <SportsDropdown />
+
+                    <button style={{float: 'right', marginTop: '15px'}} className="btn btn-primary">Mentés</button>
                 </div>
 
 
@@ -48,7 +52,7 @@ export default Profile;
 
 const inputStyle = {
     margin: 'auto',
-    width: '40%'
+    width: '60%'
 };
 
 const divFlex = {

@@ -4,8 +4,8 @@ import {Switch, Route} from 'react-router-dom';
 //import Home from './components/Home';
 //import Singup from './Singup';
 import Login from './components/Login';
-import Home from './components/Home';
-import Profile from './components/Profile';
+import Home from './components/homeComponents/Home';
+import Profile from './components/profileComponents/Profile';
 
 
 // The Main component renders one of the three provided
