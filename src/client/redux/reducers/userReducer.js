@@ -1,18 +1,14 @@
-import { POST_LOGIN } from "../constants";
+import { POST_LOGIN, LOG_OUT } from "../constants";
 
-const initialState = {
-    email: '',
-    password: '',
-};
 
-export default function(state = initialState, action) {
+export const auth = (state = false, action) => {
     switch(action.type) {
         case POST_LOGIN:
-            return {
-                email: action.email,
-                password: action.password
-            };
+            return action.user.data.auth;
+        case LOG_OUT:
+            console.log('in reducer');
+            return false;
         default:
             return state;
     }
-}
+};

@@ -1,9 +1,8 @@
-import React, {Component} from 'react'
-import {Input, Button} from 'semantic-ui-react'
-import {postLogin} from '../redux/actions/userAction';
-import {connect} from 'react-redux';
-import userReducer from "../redux/reducers/userReducer";
-import {Redirect} from 'react-router-dom';
+import React, { Component } from 'react'
+import { Input, Button } from 'semantic-ui-react'
+import {postLogin } from '../redux/actions/userAction';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
     constructor(props) {
@@ -24,43 +23,42 @@ class Login extends Component {
     }
 
     render() {
+        if (this.props.auth === true) {
+            return <Redirect to='/home' />
+        }
         return (
-            true ? (
-                <div>
-                    <h1 style={{marginLeft: '30px'}}>Login</h1>
 
-                    <form style={formStyle} onSubmit={this.onSubmit.bind(this)}>
+                    <div>
+                        <h1 style={{marginLeft: '30px'}}>Login</h1>
 
-                        <div style={inputStyle} className="form-group">
+                        <div style={formStyle}>
 
-                            <label htmlFor="email">Email address:</label>
-                            <input style={{marginBottom: '10px'}} className="form-control" type="text"
-                                   placeholder='E-mail' onChange={event => this.setState({email: event.target.value})}/>
+                            <div style={inputStyle} className="form-group">
 
-                            <label htmlFor="pwd">Password:</label>
-                            <input style={{marginBottom: '10px'}} className="form-control" type="password"
-                                   placeholder='Password'
-                                   onChange={event => this.setState({password: event.target.value})}/>
+                                <label htmlFor="email">Email address:</label>
+                                <input style={{marginBottom: '10px'}} className="form-control" type="text"
+                                       placeholder='E-mail' onChange={event => this.setState({email: event.target.value})}/>
 
-                            <Button primary>LogIn</Button>
+                                <label htmlFor="pwd">Password:</label>
+                                <input style={{marginBottom: '10px'}} className="form-control" type="password"
+                                       placeholder='Password'
+                                       onChange={event => this.setState({password: event.target.value})}/>
+
+                                <Button primary onClick={this.onSubmit.bind(this)}>LogIn</Button>
+                            </div>
+
                         </div>
+                    </div>
 
-                    </form>
-                </div>
-            ) : (
-                <div>
-                    <Redirect to="/home"/>
-                </div>
-            )
         )
     }
 }
 
 const mapStateToProps = state => ({
-    postLogin: userReducer
+    auth: state.auth
 });
 
-export default connect(mapStateToProps, {postLogin})(Login)
+export default connect(mapStateToProps, { postLogin })(Login);
 
 const inputStyle = {
     margin: 'auto',

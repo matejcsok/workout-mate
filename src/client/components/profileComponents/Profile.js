@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
+import { Redirect } from 'react-router-dom';
 
 import UserCard from './UserCard'
 import SportsDropdown from './SportsDropdown'
+import Home from "../homeComponents/Home";
+import {connect} from "react-redux";
 
 class Profile extends Component {
     constructor(props) {
@@ -14,6 +17,9 @@ class Profile extends Component {
     }
 
     render() {
+        if (this.props.auth === false) {
+            return <Redirect to='/' />
+        }
         return (
             <div className="container" style={divFlex}>
 
@@ -48,7 +54,11 @@ class Profile extends Component {
     }
 }
 
-export default Profile;
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, null)(Profile);
 
 const inputStyle = {
     margin: 'auto',

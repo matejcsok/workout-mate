@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 import SimpleMap from './Map';
 import Autocomplete from 'react-google-autocomplete';
+import {connect} from "react-redux";
+import {postLogin} from "../../redux/actions/userAction";
 
 
 class Home extends Component {
@@ -15,6 +18,9 @@ constructor(props) {
 }
 
     render() {
+        if (this.props.auth === false) {
+            return <Redirect to='/' />
+        }
         return (
             <div>
                 <Autocomplete
@@ -39,4 +45,8 @@ constructor(props) {
     }
 }
 
-export default Home;
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, null)(Home);

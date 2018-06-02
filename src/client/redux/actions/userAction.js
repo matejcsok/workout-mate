@@ -1,4 +1,4 @@
-import { POST_LOGIN } from "../constants";
+import { POST_LOGIN, LOG_OUT } from "../constants";
 import axios from 'axios'
 
 export const postLogin = (email, password) => dispatch => {
@@ -8,5 +8,9 @@ export const postLogin = (email, password) => dispatch => {
     }).then(response => dispatch({
         type: POST_LOGIN,
         user: response
-    }))
+    })).then(res => console.log(res.user))
 };
+
+export const logOutAction = () => ({
+    type: LOG_OUT
+});

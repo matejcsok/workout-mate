@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {Menu} from 'semantic-ui-react'
 
-export default class Header extends Component {
+import {logOutAction} from '../redux/actions/userAction';
+
+class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,27 +15,32 @@ export default class Header extends Component {
 
 
     handleItemClick(e, {name}) {
-        this.setState({activeItem: name})
-    }
+        if (this.props.auth === false) {
+            this.setState({activeItem: 'logIn'})
+        } else {
+            this.setState({activeItem: name})
+        }
+    };
+
 
     render() {
-
         const Logout = () => {
-            return (
-                <div>
-                    <Menu.Item
-                        name='logOut'
-                        onClick={this.handleItemClick.bind(this)}
-                    >
-                        LogOut
-                    </Menu.Item>
-                </div>
+            return (this.props.auth ?
+                    <div>
+                        <Menu.Item
+                            name='logOut'
+                            onClick={this.props.logOutAction}
+                        >
+                            LogOut
+                        </Menu.Item>
+                    </div>
+                    : null
             )
         };
 
         const Login = () => {
-            return (
-                <div>
+            return (!this.props.auth ?
+                    <div>
                         <Menu.Item
                             as={Link} to='/'
                             name='logIn'
@@ -41,7 +49,8 @@ export default class Header extends Component {
                         >
                             Login
                         </Menu.Item>
-                </div>
+                    </div>
+                    : null
             )
         };
 
@@ -49,23 +58,23 @@ export default class Header extends Component {
 
         return (
             <Menu>
-                    <Menu.Item
-                        as={Link} to='/home'
-                        name='home'
-                        active={activeItem === 'home'}
-                        onClick={this.handleItemClick.bind(this)}
-                    >
-                        Home
-                    </Menu.Item>
+                <Menu.Item
+                    as={Link} to='/home'
+                    name='home'
+                    active={activeItem === 'home'}
+                    onClick={this.handleItemClick.bind(this)}
+                >
+                    Home
+                </Menu.Item>
 
-                    <Menu.Item
-                        as={Link} to='/profile'
-                        name='profile'
-                        active={activeItem === 'profile'}
-                        onClick={this.handleItemClick.bind(this)}
-                    >
-                        Profile
-                    </Menu.Item>
+                <Menu.Item
+                    as={Link} to='/profile'
+                    name='profile'
+                    active={activeItem === 'profile'}
+                    onClick={this.handleItemClick.bind(this)}
+                >
+                    Profile
+                </Menu.Item>
 
                 <Menu.Menu position='right'>
                     <Logout/>
@@ -76,3 +85,9 @@ export default class Header extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+    auth: state.auth
+});
+
+export default connect(mapStateToProps, {logOutAction})(Header);
